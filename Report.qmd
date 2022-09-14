@@ -1,0 +1,181 @@
+---
+title: "Data Model SPZ"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+library(knitr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(gt)
+
+setwd("C:/Users/boris/Desktop/data hospital")
+
+#We upload data
+codes <- read_excel("codes_2phases.xlsx")
+head(codes)
+
+# SCIM values 2017-2020
+SCIM_17_20 <- read_excel("Auswertung_SCIM_2017-20201.xlsx")
+
+colnames(SCIM_17_20)
+# We convert the patient code to character
+
+SCIM_17_20<-SCIM_17_20 %>% mutate(FID=as.character(FID))
+head(SCIM_17_20)
+
+```
+
+From the previous data set we need to know that the key variable that identifies every row is the column FID. Note that FID means case identification number. FID:Fallidentifikationsnummer
+
+```{r}
+SCIM_17_20 %>% select(FID)%>%table() %>%data.frame()%>%select(Freq)%>% table()
+
+```
+
+From the last outcome we observe that there are FID repeated at most two times. It probably means two different SCIM values. In fact Let's select the five FID values
+
+```{r}
+fives<-SCIM_17_20 %>% select(FID)%>%table() %>%data.frame()%>% head(n=5) %>% select(FID)
+
+fives
+
+SCIM_17_20 %>% filter(FID %in% fives$FID)%>%select(FID,SCIM_TOTAL,DATUM) %>% arrange(FID,DATUM)
+
+```
+
+# Analysis two phases
+
+From the data set obtained before codes
+
+```{r}
+head(codes)
+
+```
+
+There is a correspondence between both columns $code_1$ corresponds to the same patient identified by $code_2$. The difference is that each code corresponds to a different phase. The acute phase and the rehabilitation phase. Additionally, is crucial to note that:
+
+\- There are not duplicated values in the table $codes$
+
+\- There are duplicated FID in the table $SCIM\_17\_20.$
+
+# Information about patients, diagnosis and treatments.
+
+In this stage we consider two data sets.
+
+The mb is the dataset with information about health diagnosis, treatments, age, sex among others. The dataset fid_pid is a dataset that contains a correspondence between FID and PID PID: Patienten fallnummer that is the patient case number.
+
+```{r}
+
+mb<-readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/mb.rds")
+
+fid_pid <-  readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/fidpid.rds")
+
+fid_pid%>%select(PID)%>%table()%>%data.frame()%>%select(Freq)%>% table()
+
+colnames(mb)
+```
+
+We include variables that represent the time and cost for each intervention to every patient
+
+```{r}
+time_cost<-readRDS("time_cost.rds")
+colnames(time_cost)
+```
+
+The units are given by:
+
+```{r}
+  unts<-c("min","min","min","chf","chf","min","min","min","tp","min","tp")
+  unts
+```
+
+Summarizing, we have the next important data sets.
+
+-   mb
+
+-   codes
+
+-   SCIM_17_20
+
+-   fid_pid
+
+-   time_cost
+
+# Evolution of SCIM
+
+```{r}
+SCIM_17_20 %>% select(FID) %>% table() %>% data.frame()%>% arrange(-Freq)%>%head(n=5)
+
+mb%>% select(id) %>% table() %>% data.frame()%>%arrange(-Freq) %>% head(n=5)
+
+time_cost %>% select(id) %>% table() %>% data.frame() %>% arrange(-Freq) %>% head(n=8)
+
+fid_pid %>% select(FID) %>% table() %>% data.frame()%>% arrange(-Freq) %>% head(n=8)
+
+fid_pid %>% select(PID) %>% table() %>% data.frame()%>% arrange(-Freq) %>% head(n=8)
+```
+
+From the previous summaries we observe that in the table fip_pid, there are some PID codes repeated until $16$ times. It means that the patient considered was \$16\$ times in the clinic, each time with a different FID code.
+
+In order to analyze the evolution of the SCIM value we consider the next steps.
+
+Due to the importance of track the acute and rehabilitation phase we merge the mb dataset with codes. Note that an important issue could be the treatment of the codes for acute and rehabilitation phase. In order to deal with that we proceed as follows:
+
+```{r}
+codes$uniq<-paste("uni",1:nrow(codes),sep="_")
+SCIM_17_20 %>% select(FID) %>% unique() %>% nrow()
+
+SCIM_17_20 %>% select(FID) %>% 
+  merge(codes%>%mutate(ph="acute"),by.x="FID",by.y="code1") %>% nrow()
+P1<-SCIM_17_20  %>% 
+  merge(codes,by.x="FID",by.y="code1",all.x=TRUE)%>% select(FID,code2,uniq,SCIM_TOTAL) 
+head(P1)
+
+P2<-P1 %>% merge(codes,by.x="FID",by.y="code2",all.x=TRUE) %>% select(FID,code1,code2,uniq.x,uniq.y,SCIM_TOTAL)
+# For example
+head(P2[c(71,72,73,74,449,450,451,452),])
+```
+
+If everything is ok, when uniq.x has any value uni.y should be with \<NA\> and viceversa. The next chunk evaluates if both columns uniq.x and uniq.y are not empty at the same time.
+
+```{r}
+P2 %>% filter(!is.na(uniq.x)&!is.na(uniq.y))
+
+P2$uniq.x<-ifelse(is.na(P2$uniq.x),"",P2$uniq.x)
+P2$uniq.y<-ifelse(is.na(P2$uniq.y),"",P2$uniq.y)
+
+P2$unique<-paste(P2$uniq.x,P2$uniq.y,sep="")
+head(P2)
+
+P2$acute<-ifelse(P2$uniq.x=="","","acute")
+P2$rehab<-ifelse(P2$uniq.y=="","","rehab")
+P2$phase<-paste(P2$acute,P2$rehab,sep="")
+P3<-P2%>% select(unique,FID,code1,code2,phase,SCIM_TOTAL)
+head(P3)
+tabl<-table(P3$unique)%>% data.frame() %>% arrange(-Freq)
+head(tabl)
+P3%>%filter(unique %in% tabl[-1,]$Var1) %>% merge(fid_pid,by.x="FID",by.y="FID")%>% arrange(PID,unique)%>% head(n=20)
+P4<-P3%>%filter(!is.na(FID))
+#merge(P4,fid_pid,by.x="FID",by.y="FID") %>% select(PID) %>% table() %>% data.frame()
+```
+
+```{r}
+P4%>% colnames()
+head(P4)
+
+
+P5<-P3%>%filter(!is.na(FID))%>%merge(P4,fid_pid,by.x="FID",by.y="FID")
+
+head(P5)
+```

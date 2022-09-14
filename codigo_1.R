@@ -9,17 +9,17 @@ setwd("C:/Users/boris/Desktop/data hospital")
 
 #Codigos correspondientes acute -rehabilitation
 codes <- read_excel("codes_2phases.xlsx")
+head(codes)
 getwd()
 # leemos el conjunto de datos que contiene los valores SCIM 2017-2020
 SCIM_17_20 <- read_excel("Auswertung_SCIM_2017-20201.xlsx")
+head(SCIM_17_20)
 #Transformamos el Codigo del paciente 
 SCIM_17_20<-SCIM_17_20 %>% mutate(FID=as.character(FID))
 
 # Notar que se desea mostrar SCIM en el tiempo al menos 4 valores
 # 2 de acute y 2 de rehabilitacion
 # Por lo tanto solo necesitamos considerar los codigos de la tabla codes
-SCIM_17_20 %>% filter(FID=="6006542") %>% View()
-SCIM_17_20 %>% filter(format(SCIM_17_20$DATUM,format = "%Y")=="2017")%>% select(FID) %>% table() %>% data.frame()
 
 data.frame(table(SCIM_17_20$FID))
 # Here I consider only codes that appear twice, entry-ac/rh-exit
@@ -49,7 +49,7 @@ A1 <- A1%>%group_by(FID)%>%
 codes<-codes%>%mutate(indpat=paste("pat",1:nrow(codes),sep=""))
 
 # Separo codigos ac_phase y rh_phase
-ac<-codes%>%select(code1,indpat)
+ac<-codes%>%dplyr::select(code1,indpat)
 rh<-codes%>%select(code2,indpat)
 ac1<-ac%>% select(code1)%>% mutate(phase="acute")
 rh1<-rh%>% select(code2) %>% mutate(phase="rehab")
@@ -102,17 +102,16 @@ cpth2020<-cpth2020%>%mutate(year=2020)
 
 
 cpth<-rbind(cpth2017,cpth2018,cpth2019,cpth2020)%>%select(V1,clipath_code,year)
-
+saveRDS(cpth,"cpth.RDS")
 data.frame(table(cpth$V1))%>% arrange(-Freq)
 
-SCIM$SCIM_TOTAL<-as.numeric(SCIM$SCIM_TOTAL)
 
 cpth$V1<-as.character(cpth$V1)
 colnames(cpth)
 #Indications
 ind_cpth <- read_excel("ind_cpth.xlsx")
 
-
+nrow(SCIM_prin)
 SCIM_prin<-SCIM %>% merge(cpth,by.x="FID",by.y="V1") %>%
   merge(ind_cpth,by.x="clipath_code",by.y="Indication")
 
@@ -134,11 +133,9 @@ dtf%>%ggplot(aes(variable, SCIM_TOTAL, color = Clinical.Pathway, group = indpat)
   geom_point(size = 1.5) +
   geom_line()+facet_wrap(~Clinical.Pathway)
 
-dictionary_vars %>% select(FID) %>% table() %>% data.frame() %>% arrange(-Freq) %>%
 
-dictionary_vars <- read_excel("dictionary_vars.xlsx", 
+dictionary_vars <-   read_excel("C:/Users/boris/Dropbox/PC/Desktop/data hospital/dictionary_vars.xlsx", 
                               sheet = "Sheet2")
-
 
 PID<- dictionary_vars
 PID%>%select(PID)%>%table()%>%data.frame()%>%arrange(-Freq)

@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<head>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
 
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.0.38" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Data Model SPZ</title>
@@ -82,17 +80,26 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
+
+<script src="Report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Report_files/libs/quarto-html/quarto.js"></script>
+<script src="Report_files/libs/quarto-html/popper.min.js"></script>
+<script src="Report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body>
+<body class="fullcontent">
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-</div>
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -112,31 +119,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
+Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
+<pre><code>The following objects are masked from 'package:stats':
 
     filter, lag</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from &#39;package:base&#39;:
+<pre><code>The following objects are masked from 'package:base':
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/boris/Desktop/data hospital&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/boris/Desktop/data hospital"</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#We upload data</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>codes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;codes_2phases.xlsx&quot;</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes)</span></code></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>codes <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"codes_2phases.xlsx"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   code1   date                code2  
@@ -148,54 +155,54 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5 6043203 2020-10-30 00:00:00 6043916
 6 6017204 2018-04-30 00:00:00 6018809</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SCIM values 2017-2020</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Auswertung_SCIM_2017-20201.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SCIM values 2017-2020</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Auswertung_SCIM_2017-20201.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Expecting logical in F4131 / R4131C6: got &#39;ja&#39;</code></pre>
+<pre><code>Warning: Expecting logical in F4131 / R4131C6: got 'ja'</code></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(SCIM_17_20)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(SCIM_17_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;NR&quot;                            &quot;PATIENT_NR&quot;                   
- [3] &quot;FALL_NR&quot;                       &quot;FID&quot;                          
- [5] &quot;KURZZEICHEN&quot;                   &quot;LASTMEASURE&quot;                  
- [7] &quot;SP_NAHRUNG&quot;                    &quot;SP_WASCHEN_OBER&quot;              
- [9] &quot;SP_WASCHEN_UNTER&quot;              &quot;SP_ANZIEHEN_OBER&quot;             
-[11] &quot;SP_ANZIEHEN_UNTER&quot;             &quot;SP_GESICHT&quot;                   
-[13] &quot;SP_SUB&quot;                        &quot;AS_ATMUNG&quot;                    
-[15] &quot;AS_BLASE&quot;                      &quot;AS_DARM&quot;                      
-[17] &quot;AS_TOILETTE&quot;                   &quot;AS_SUB&quot;                       
-[19] &quot;MH_BETT&quot;                       &quot;MH_TRANSFER_BETT&quot;             
-[21] &quot;MH_TRANSFER_WC&quot;                &quot;MH_SUB&quot;                       
-[23] &quot;MA_HAUS&quot;                       &quot;MA_MITTLERE_DISTANZ&quot;          
-[25] &quot;MA_AUSSER_HAUS&quot;                &quot;MA_TREPPEN&quot;                   
-[27] &quot;MA_TRANSFER_AUTO&quot;              &quot;MA_TRANSFER_BODEN&quot;            
-[29] &quot;MA_SUB&quot;                        &quot;SCIM_TOTAL&quot;                   
-[31] &quot;DATUM&quot;                         &quot;ERZEUGER&quot;                     
-[33] &quot;ERZEUGUNGSDATUM&quot;               &quot;AENDERER&quot;                     
-[35] &quot;AENDERUNGSDATUM&quot;               &quot;ERZ_CLIENT_INFO&quot;              
-[37] &quot;ERSTELLER_ERGO&quot;                &quot;ERSTELLER_PFLEGE&quot;             
-[39] &quot;ERSTELLER_PHYSIO&quot;              &quot;SP_NAHRUNG_AE&quot;                
-[41] &quot;SP_WASCHEN_OBER_AE&quot;            &quot;SP_WASCHEN_UNTER_AE&quot;          
-[43] &quot;SP_ANZIEHEN_OBER_AE&quot;           &quot;SP_ANZIEHEN_UNTER_AE&quot;         
-[45] &quot;SP_GESICHT_AE&quot;                 &quot;AS_ATMUNG_AE&quot;                 
-[47] &quot;AS_BLASE_AE&quot;                   &quot;AS_DARM_AE&quot;                   
-[49] &quot;AS_TOILETTE_AE&quot;                &quot;MH_BETT_AE&quot;                   
-[51] &quot;MH_TRANSFER_BETT_AE&quot;           &quot;MH_TRANSFER_WC_AE&quot;            
-[53] &quot;MA_HAUS_AE&quot;                    &quot;MA_MITTLERE_DISTANZ_AE&quot;       
-[55] &quot;MA_AUSSER_HAUS_AE&quot;             &quot;MA_TREPPEN_AE&quot;                
-[57] &quot;MA_TRANSFER_AUTO_AE&quot;           &quot;MA_TRANSFER_BODEN_AE&quot;         
-[59] &quot;KF_VERSTEHEN_AE&quot;               &quot;KF_VERSTEHEN&quot;                 
-[61] &quot;KF_KOMMUNIKATION_VERSTEHEN&quot;    &quot;KF_KOMMUNIKATION_VERSTEHEN_AE&quot;
-[63] &quot;KF_AUSDRUCK&quot;                   &quot;KF_AUSDRUCK_AE&quot;               
-[65] &quot;KF_KOMMUNIKATION_AUSDRUCK&quot;     &quot;KF_KOMMUNIKATION_AUSDRUCK_AE&quot; 
-[67] &quot;KF_SOZIALES_VERHALTEN&quot;         &quot;KF_SOZIALES_VERHALTEN_AE&quot;     
-[69] &quot;KF_PROBLEM_LOESUNG&quot;            &quot;KF_PROBLEM_LOESUNG_AE&quot;        
-[71] &quot;KF_SUB&quot;                       </code></pre>
+<pre><code> [1] "NR"                            "PATIENT_NR"                   
+ [3] "FALL_NR"                       "FID"                          
+ [5] "KURZZEICHEN"                   "LASTMEASURE"                  
+ [7] "SP_NAHRUNG"                    "SP_WASCHEN_OBER"              
+ [9] "SP_WASCHEN_UNTER"              "SP_ANZIEHEN_OBER"             
+[11] "SP_ANZIEHEN_UNTER"             "SP_GESICHT"                   
+[13] "SP_SUB"                        "AS_ATMUNG"                    
+[15] "AS_BLASE"                      "AS_DARM"                      
+[17] "AS_TOILETTE"                   "AS_SUB"                       
+[19] "MH_BETT"                       "MH_TRANSFER_BETT"             
+[21] "MH_TRANSFER_WC"                "MH_SUB"                       
+[23] "MA_HAUS"                       "MA_MITTLERE_DISTANZ"          
+[25] "MA_AUSSER_HAUS"                "MA_TREPPEN"                   
+[27] "MA_TRANSFER_AUTO"              "MA_TRANSFER_BODEN"            
+[29] "MA_SUB"                        "SCIM_TOTAL"                   
+[31] "DATUM"                         "ERZEUGER"                     
+[33] "ERZEUGUNGSDATUM"               "AENDERER"                     
+[35] "AENDERUNGSDATUM"               "ERZ_CLIENT_INFO"              
+[37] "ERSTELLER_ERGO"                "ERSTELLER_PFLEGE"             
+[39] "ERSTELLER_PHYSIO"              "SP_NAHRUNG_AE"                
+[41] "SP_WASCHEN_OBER_AE"            "SP_WASCHEN_UNTER_AE"          
+[43] "SP_ANZIEHEN_OBER_AE"           "SP_ANZIEHEN_UNTER_AE"         
+[45] "SP_GESICHT_AE"                 "AS_ATMUNG_AE"                 
+[47] "AS_BLASE_AE"                   "AS_DARM_AE"                   
+[49] "AS_TOILETTE_AE"                "MH_BETT_AE"                   
+[51] "MH_TRANSFER_BETT_AE"           "MH_TRANSFER_WC_AE"            
+[53] "MA_HAUS_AE"                    "MA_MITTLERE_DISTANZ_AE"       
+[55] "MA_AUSSER_HAUS_AE"             "MA_TREPPEN_AE"                
+[57] "MA_TRANSFER_AUTO_AE"           "MA_TRANSFER_BODEN_AE"         
+[59] "KF_VERSTEHEN_AE"               "KF_VERSTEHEN"                 
+[61] "KF_KOMMUNIKATION_VERSTEHEN"    "KF_KOMMUNIKATION_VERSTEHEN_AE"
+[63] "KF_AUSDRUCK"                   "KF_AUSDRUCK_AE"               
+[65] "KF_KOMMUNIKATION_AUSDRUCK"     "KF_KOMMUNIKATION_AUSDRUCK_AE" 
+[67] "KF_SOZIALES_VERHALTEN"         "KF_SOZIALES_VERHALTEN_AE"     
+[69] "KF_PROBLEM_LOESUNG"            "KF_PROBLEM_LOESUNG_AE"        
+[71] "KF_SUB"                       </code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We convert the patient code to character</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We convert the patient code to character</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>SCIM_17_20<span class="ot">&lt;-</span>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">FID=</span><span class="fu">as.character</span>(FID))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SCIM_17_20)</span></code></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SCIM_17_20)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 71
      NR PATIENT_NR FALL_NR FID   KURZZ…¹ LASTM…² SP_NA…³ SP_WA…⁴ SP_WA…⁵ SP_AN…⁶
@@ -220,7 +227,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <li>FID: Fallidentifikationsnummer</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)<span class="sc">%&gt;%</span><span class="fu">table</span>() <span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">select</span>(Freq)<span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)<span class="sc">%&gt;%</span><span class="fu">table</span>() <span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">select</span>(Freq)<span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Freq
    1    2 
@@ -229,9 +236,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 </div>
 <p>From the last outcome we observe that there are FID repeated at most twice. It probably means two different SCIM values. In fact Let’s select the first five FID values.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fives<span class="ot">&lt;-</span>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)<span class="sc">%&gt;%</span><span class="fu">table</span>() <span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)</span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fives<span class="ot">&lt;-</span>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)<span class="sc">%&gt;%</span><span class="fu">table</span>() <span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fives</span></code></pre></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>fives</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID
 1 5205639
@@ -240,7 +247,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 4 5210382
 5 5211089</code></pre>
 </div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(FID <span class="sc">%in%</span> fives<span class="sc">$</span>FID)<span class="sc">%&gt;%</span><span class="fu">select</span>(FID,SCIM_TOTAL,DATUM) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(FID,DATUM)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(FID <span class="sc">%in%</span> fives<span class="sc">$</span>FID)<span class="sc">%&gt;%</span><span class="fu">select</span>(FID,SCIM_TOTAL,DATUM) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(FID,DATUM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    FID     SCIM_TOTAL DATUM              
@@ -265,7 +272,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <li>code 2: Rehabilitation Phase</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   code1   date                code2  
@@ -290,10 +297,10 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <li>PID: Patienten fallnummer that is the patient case number.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mb<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/mb.rds&quot;</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mb)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">colnames</span>(mb)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],<span class="st">&quot;stay_ICU&quot;</span>,<span class="fu">colnames</span>(mb)[<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>],<span class="st">&quot;cost_payer&quot;</span>,<span class="fu">colnames</span>(mb)[<span class="dv">9</span><span class="sc">:</span><span class="dv">31</span>])</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="ot">&lt;-</span>  <span class="fu">readRDS</span>(<span class="st">&quot;C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/fidpid.rds&quot;</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mb)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mb<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/mb.rds"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mb)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fu">colnames</span>(mb)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],<span class="st">"stay_ICU"</span>,<span class="fu">colnames</span>(mb)[<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>],<span class="st">"cost_payer"</span>,<span class="fu">colnames</span>(mb)[<span class="dv">9</span><span class="sc">:</span><span class="dv">31</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="ot">&lt;-</span>  <span class="fu">readRDS</span>(<span class="st">"C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/fidpid.rds"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  gender birth_date age residence stay_ICU entry_date leave_date cost_payer
 1      1   19691125  45      4571        0 2015102900 2017081610          4
@@ -331,26 +338,26 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5 5211089 2017
 6 5211529 2017</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fid_pid<span class="sc">%&gt;%</span><span class="fu">select</span>(PID)<span class="sc">%&gt;%</span><span class="fu">table</span>()<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">select</span>(Freq)<span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fid_pid<span class="sc">%&gt;%</span><span class="fu">select</span>(PID)<span class="sc">%&gt;%</span><span class="fu">table</span>()<span class="sc">%&gt;%</span><span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">select</span>(Freq)<span class="sc">%&gt;%</span> <span class="fu">table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Freq
    1    2    3    4    5    6    7    8    9   10   11   12   13   16 
 1664  888  258  125   76   45   21   11   10    5    3    1    1    1 </code></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mb)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(mb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;gender&quot;           &quot;birth_date&quot;       &quot;age&quot;              &quot;residence&quot;       
- [5] &quot;stay_ICU&quot;         &quot;entry_date&quot;       &quot;leave_date&quot;       &quot;cost_payer&quot;      
- [9] &quot;main_diag&quot;        &quot;add_diag&quot;         &quot;sec_diag1&quot;        &quot;sec_diag2&quot;       
-[13] &quot;sec_diag3&quot;        &quot;sec_diag4&quot;        &quot;sec_diag5&quot;        &quot;sec_diag6&quot;       
-[17] &quot;sec_diag7&quot;        &quot;sec_diag8&quot;        &quot;main_treat&quot;       &quot;start_main_treat&quot;
-[21] &quot;add_main&quot;         &quot;fur_treat1&quot;       &quot;fur_treat2&quot;       &quot;fur_treat3&quot;      
-[25] &quot;fur_treat4&quot;       &quot;fur_treat5&quot;       &quot;fur_treat6&quot;       &quot;fur_treat7&quot;      
-[29] &quot;fur_treat8&quot;       &quot;id&quot;               &quot;year&quot;            </code></pre>
+<pre><code> [1] "gender"           "birth_date"       "age"              "residence"       
+ [5] "stay_ICU"         "entry_date"       "leave_date"       "cost_payer"      
+ [9] "main_diag"        "add_diag"         "sec_diag1"        "sec_diag2"       
+[13] "sec_diag3"        "sec_diag4"        "sec_diag5"        "sec_diag6"       
+[17] "sec_diag7"        "sec_diag8"        "main_treat"       "start_main_treat"
+[21] "add_main"         "fur_treat1"       "fur_treat2"       "fur_treat3"      
+[25] "fur_treat4"       "fur_treat5"       "fur_treat6"       "fur_treat7"      
+[29] "fur_treat8"       "id"               "year"            </code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fid_pid)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fid_pid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;FID&quot; &quot;PID&quot;</code></pre>
+<pre><code>[1] "FID" "PID"</code></pre>
 </div>
 </div>
 </section>
@@ -358,20 +365,20 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <h1>Variables time and cost of interventions</h1>
 <p>We include variables that represent the time and cost for each intervention to every patient</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>time_cost<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;time_cost.rds&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(time_cost)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>time_cost<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"time_cost.rds"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(time_cost)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;id&quot;          &quot;op_room&quot;     &quot;anaest&quot;      &quot;int_care&quot;    &quot;imag&quot;       
- [6] &quot;lab&quot;         &quot;physt&quot;       &quot;ergo&quot;        &quot;logo&quot;        &quot;non_med_ter&quot;
-[11] &quot;nurs&quot;        &quot;psyc&quot;        &quot;year&quot;       </code></pre>
+<pre><code> [1] "id"          "op_room"     "anaest"      "int_care"    "imag"       
+ [6] "lab"         "physt"       "ergo"        "logo"        "non_med_ter"
+[11] "nurs"        "psyc"        "year"       </code></pre>
 </div>
 </div>
 <p>The units are given by:</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  unts<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;min&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;chf&quot;</span>,<span class="st">&quot;chf&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;tp&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;tp&quot;</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  unts</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  unts<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"min"</span>,<span class="st">"min"</span>,<span class="st">"min"</span>,<span class="st">"chf"</span>,<span class="st">"chf"</span>,<span class="st">"min"</span>,<span class="st">"min"</span>,<span class="st">"min"</span>,<span class="st">"tp"</span>,<span class="st">"min"</span>,<span class="st">"tp"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  unts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] &quot;min&quot; &quot;min&quot; &quot;min&quot; &quot;chf&quot; &quot;chf&quot; &quot;min&quot; &quot;min&quot; &quot;min&quot; &quot;tp&quot;  &quot;min&quot; &quot;tp&quot; </code></pre>
+<pre><code> [1] "min" "min" "min" "chf" "chf" "min" "min" "min" "tp"  "min" "tp" </code></pre>
 </div>
 </div>
 <p>Summarizing, we have the next important data sets.</p>
@@ -386,7 +393,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <section id="evolution-of-scim" class="level1">
 <h1>Evolution of SCIM</h1>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)<span class="sc">%&gt;%</span><span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID Freq
 1 5205639    2
@@ -395,7 +402,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 4 5210382    2
 5 5211089    2</code></pre>
 </div>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mb<span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>mb<span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span><span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       id Freq
 1 6006658    2
@@ -404,7 +411,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 4 6009414    2
 5 6009503    2</code></pre>
 </div>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>time_cost <span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>time_cost <span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       id Freq
 1 5211529    2
@@ -416,7 +423,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 7 6009636    2
 8 6009808    2</code></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID Freq
 1 5205639    1
@@ -428,7 +435,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 7 5211936    1
 8 5212187    1</code></pre>
 </div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>()<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      PID Freq
 1 0152021   16
@@ -443,7 +450,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 </div>
 <p>From the previous summaries we observe that in the table <em>fip_pid</em>, there are some <em>PID</em> codes repeated <span class="math inline">\(16\)</span> times. It means that the patient considered was $16$ times in the clinic, each time with a different FID code.</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">&quot;0152021&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">"0152021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 2
    FID     PID    
@@ -465,7 +472,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 15 6037398 0152021
 16 6040704 0152021</code></pre>
 </div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">&quot;0152021&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(FID) <span class="sc">|&gt;</span> <span class="fu">unique</span>() <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>fid_pid <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">"0152021"</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(FID) <span class="sc">|&gt;</span> <span class="fu">unique</span>() <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 16</code></pre>
 </div>
@@ -473,9 +480,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 <p>In order to analyze the evolution of the SCIM value we consider the next steps.</p>
 <p>Due to the importance of track the acute and rehabilitation phase we merge the mb dataset with codes. Note that an important issue could be the treatment of the codes for acute and rehabilitation phase. In order to deal with that we proceed as follows:</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We create a code uni_n in the codes table</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>codes<span class="sc">$</span>uniq<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">&quot;uni&quot;</span>,<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(codes),<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes,<span class="at">n=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We create a code uni_n in the codes table</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>codes<span class="sc">$</span>uniq<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">"uni"</span>,<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(codes),<span class="at">sep=</span><span class="st">"_"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(codes,<span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 4
    code1   date                code2   uniq  
@@ -491,25 +498,25 @@ Attaching package: &#39;dplyr&#39;</code></pre>
  9 6013568 2017-12-18 00:00:00 6014569 uni_9 
 10 6025398 2019-01-29 00:00:00 6026686 uni_10</code></pre>
 </div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4359</code></pre>
 </div>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that when we merge SCIM_17_20 with codes not all codes match, because</span></span>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that when we merge SCIM_17_20 with codes not all codes match, because</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co"># not all of them were in two phases</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID) <span class="sc">%&gt;%</span> </span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">ph=</span><span class="st">&quot;acute&quot;</span>),<span class="at">by.x=</span><span class="st">&quot;FID&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;code1&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes<span class="sc">%&gt;%</span><span class="fu">mutate</span>(<span class="at">ph=</span><span class="st">"acute"</span>),<span class="at">by.x=</span><span class="st">"FID"</span>,<span class="at">by.y=</span><span class="st">"code1"</span>) <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1638</code></pre>
 </div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1638 matches in acute phase</span></span>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1638 matches in acute phase</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge with code 1 acute phase</span></span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>P1 <span class="ot">&lt;-</span> SCIM_17_20  <span class="sc">%&gt;%</span> </span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">&quot;FID&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;code1&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">"FID"</span>,<span class="at">by.y=</span><span class="st">"code1"</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P1)</span></code></pre></div>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID    NR PATIENT_NR FALL_NR KURZZEICHEN LASTMEASURE SP_NAHRUNG
 1 5205639 36604      73510      34         CUS          NA          0
@@ -624,12 +631,12 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5               &lt;NA&gt;                  &lt;NA&gt;   &lt;NA&gt; &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;
 6               &lt;NA&gt;                  &lt;NA&gt;      - &lt;NA&gt;  &lt;NA&gt; &lt;NA&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge with code 2 rehabilitation phase</span></span>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge with code 2 rehabilitation phase</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>P2 <span class="ot">&lt;-</span> P1 <span class="sc">%&gt;%</span> <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">&quot;FID&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;code2&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>P2 <span class="ot">&lt;-</span> P1 <span class="sc">%&gt;%</span> <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">"FID"</span>,<span class="at">by.y=</span><span class="st">"code2"</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># For example</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2[<span class="fu">c</span>(<span class="dv">71</span>,<span class="dv">72</span>,<span class="dv">73</span>,<span class="dv">74</span>,<span class="dv">449</span>,<span class="dv">450</span>,<span class="dv">451</span>,<span class="dv">452</span>),])</span></code></pre></div>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2[<span class="fu">c</span>(<span class="dv">71</span>,<span class="dv">72</span>,<span class="dv">73</span>,<span class="dv">74</span>,<span class="dv">449</span>,<span class="dv">450</span>,<span class="dv">451</span>,<span class="dv">452</span>),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        FID    NR PATIENT_NR FALL_NR KURZZEICHEN LASTMEASURE SP_NAHRUNG
 71  5215438 42899       9567      52        BUIR          NA          2
@@ -761,7 +768,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 </div>
 <p>If everything is ok, when uniq.x has any value uni.y should be with &lt;NA&gt; and viceversa. The next chunk evaluates if both columns uniq.x and uniq.y are not empty at the same time.</p>
 <div class="cell">
-<div class="sourceCode" id="cb57"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>P2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(uniq.x<span class="sc">!=</span><span class="st">&quot;&quot;</span><span class="sc">&amp;</span>uniq.y<span class="sc">!=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>P2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(uniq.x<span class="sc">!=</span><span class="st">""</span><span class="sc">&amp;</span>uniq.y<span class="sc">!=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] FID                           NR                           
  [3] PATIENT_NR                    FALL_NR                      
@@ -804,13 +811,13 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 [77] uniq.y                       
 &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 rows has both values empty at the same time</span></span>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 rows has both values empty at the same time</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>uniq.x<span class="ot">&lt;-</span><span class="fu">ifelse</span>(<span class="fu">is.na</span>(P2<span class="sc">$</span>uniq.x),<span class="st">&quot;&quot;</span>,P2<span class="sc">$</span>uniq.x)</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>uniq.y<span class="ot">&lt;-</span><span class="fu">ifelse</span>(<span class="fu">is.na</span>(P2<span class="sc">$</span>uniq.y),<span class="st">&quot;&quot;</span>,P2<span class="sc">$</span>uniq.y)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>uniq.x<span class="ot">&lt;-</span><span class="fu">ifelse</span>(<span class="fu">is.na</span>(P2<span class="sc">$</span>uniq.x),<span class="st">""</span>,P2<span class="sc">$</span>uniq.x)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>uniq.y<span class="ot">&lt;-</span><span class="fu">ifelse</span>(<span class="fu">is.na</span>(P2<span class="sc">$</span>uniq.y),<span class="st">""</span>,P2<span class="sc">$</span>uniq.y)</span>
 <span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>unique<span class="ot">&lt;-</span><span class="fu">paste</span>(P2<span class="sc">$</span>uniq.x,P2<span class="sc">$</span>uniq.y,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2)</span></code></pre></div>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>unique<span class="ot">&lt;-</span><span class="fu">paste</span>(P2<span class="sc">$</span>uniq.x,P2<span class="sc">$</span>uniq.y,<span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID    NR PATIENT_NR FALL_NR KURZZEICHEN LASTMEASURE SP_NAHRUNG
 1 5205639 36604      73510      34         CUS          NA          0
@@ -932,13 +939,13 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5   &lt;NA&gt;              
 6   &lt;NA&gt;              </code></pre>
 </div>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>acute<span class="ot">&lt;-</span><span class="fu">ifelse</span>(P2<span class="sc">$</span>uniq.x<span class="sc">==</span><span class="st">&quot;&quot;</span>,<span class="st">&quot;&quot;</span>,<span class="st">&quot;acute&quot;</span>)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>rehab<span class="ot">&lt;-</span><span class="fu">ifelse</span>(P2<span class="sc">$</span>uniq.y<span class="sc">==</span><span class="st">&quot;&quot;</span>,<span class="st">&quot;&quot;</span>,<span class="st">&quot;rehab&quot;</span>)</span>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>acute<span class="ot">&lt;-</span><span class="fu">ifelse</span>(P2<span class="sc">$</span>uniq.x<span class="sc">==</span><span class="st">""</span>,<span class="st">""</span>,<span class="st">"acute"</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>rehab<span class="ot">&lt;-</span><span class="fu">ifelse</span>(P2<span class="sc">$</span>uniq.y<span class="sc">==</span><span class="st">""</span>,<span class="st">""</span>,<span class="st">"rehab"</span>)</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>phase<span class="ot">&lt;-</span><span class="fu">paste</span>(P2<span class="sc">$</span>acute,P2<span class="sc">$</span>rehab,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>P2<span class="sc">$</span>phase<span class="ot">&lt;-</span><span class="fu">paste</span>(P2<span class="sc">$</span>acute,P2<span class="sc">$</span>rehab,<span class="at">sep=</span><span class="st">""</span>)</span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>P3<span class="ot">&lt;-</span>P2<span class="sc">%&gt;%</span> <span class="fu">select</span>(unique,FID,code1,code2,phase,SCIM_TOTAL)</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2)</span></code></pre></div>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID    NR PATIENT_NR FALL_NR KURZZEICHEN LASTMEASURE SP_NAHRUNG
 1 5205639 36604      73510      34         CUS          NA          0
@@ -1060,7 +1067,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5   &lt;NA&gt;                                
 6   &lt;NA&gt;                                </code></pre>
 </div>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P3)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  unique     FID code1 code2 phase SCIM_TOTAL
 1        5205639  &lt;NA&gt;  &lt;NA&gt;               15
@@ -1070,8 +1077,8 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5        5208756  &lt;NA&gt;  &lt;NA&gt;               14
 6        5208756  &lt;NA&gt;  &lt;NA&gt;               63</code></pre>
 </div>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>tabl<span class="ot">&lt;-</span><span class="fu">table</span>(P3<span class="sc">$</span>unique)<span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabl)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>tabl<span class="ot">&lt;-</span><span class="fu">table</span>(P3<span class="sc">$</span>unique)<span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tabl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Var1 Freq
 1          3976
@@ -1081,7 +1088,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5 uni_1002    4
 6 uni_1003    4</code></pre>
 </div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(unique <span class="sc">%in%</span> tabl[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Var1) <span class="sc">%&gt;%</span> <span class="fu">merge</span>(fid_pid,<span class="at">by.x=</span><span class="st">&quot;FID&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;FID&quot;</span>)<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PID,unique)<span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(unique <span class="sc">%in%</span> tabl[<span class="sc">-</span><span class="dv">1</span>,]<span class="sc">$</span>Var1) <span class="sc">%&gt;%</span> <span class="fu">merge</span>(fid_pid,<span class="at">by.x=</span><span class="st">"FID"</span>,<span class="at">by.y=</span><span class="st">"FID"</span>)<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PID,unique)<span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       FID unique   code1   code2 phase SCIM_TOTAL     PID
 1  6012487  uni_1    &lt;NA&gt; 6014266 acute         39 0000362
@@ -1105,16 +1112,16 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 19 6016770  uni_8    &lt;NA&gt; 6017875 acute         21 0000548
 20 6017875  uni_8 6016770    &lt;NA&gt; rehab         25 0000548</code></pre>
 </div>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>P4<span class="ot">&lt;-</span>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(FID))</span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co">#merge(P4,fid_pid,by.x=&quot;FID&quot;,by.y=&quot;FID&quot;) %&gt;% select(PID) %&gt;% table() %&gt;% data.frame()</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>P4<span class="ot">&lt;-</span>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(FID))</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co">#merge(P4,fid_pid,by.x="FID",by.y="FID") %&gt;% select(PID) %&gt;% table() %&gt;% data.frame()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb70"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>P4<span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>P4<span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;unique&quot;     &quot;FID&quot;        &quot;code1&quot;      &quot;code2&quot;      &quot;phase&quot;     
-[6] &quot;SCIM_TOTAL&quot;</code></pre>
+<pre><code>[1] "unique"     "FID"        "code1"      "code2"      "phase"     
+[6] "SCIM_TOTAL"</code></pre>
 </div>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P4)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  unique     FID code1 code2 phase SCIM_TOTAL
 1        5205639  &lt;NA&gt;  &lt;NA&gt;               15
@@ -1124,9 +1131,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 5        5208756  &lt;NA&gt;  &lt;NA&gt;               14
 6        5208756  &lt;NA&gt;  &lt;NA&gt;               63</code></pre>
 </div>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>P5<span class="ot">&lt;-</span>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(FID))<span class="sc">%&gt;%</span><span class="fu">merge</span>(P4,fid_pid,<span class="at">by.x=</span><span class="st">&quot;FID&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;FID&quot;</span>)</span>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>P5<span class="ot">&lt;-</span>P3<span class="sc">%&gt;%</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(FID))<span class="sc">%&gt;%</span><span class="fu">merge</span>(P4,fid_pid,<span class="at">by.x=</span><span class="st">"FID"</span>,<span class="at">by.y=</span><span class="st">"FID"</span>)</span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P5)</span></code></pre></div>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(P5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      FID unique.x code1.x code2.x phase.x SCIM_TOTAL.x unique.y code1.y
 1 5205639             &lt;NA&gt;    &lt;NA&gt;                   15             &lt;NA&gt;
@@ -1145,7 +1152,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb76"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">|&gt;</span> <span class="fu">table</span>() <span class="sc">|&gt;</span> <span class="fu">data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(Freq<span class="sc">==</span><span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">15</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">%&gt;%</span> <span class="fu">select</span>(id) <span class="sc">|&gt;</span> <span class="fu">table</span>() <span class="sc">|&gt;</span> <span class="fu">data.frame</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(Freq<span class="sc">==</span><span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="at">n=</span><span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        id Freq
 1  6006658    2
@@ -1164,7 +1171,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 14 6010592    2
 15 6010639    2</code></pre>
 </div>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">&quot;6006658&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">==</span><span class="st">"6006658"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  gender birth_date age residence stay_ICU entry_date leave_date cost_payer
 1      1   19520404  65       ITA       22 2017042600                     1
@@ -1182,14 +1189,14 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 1 6006658 2017
 2 6006658 2018</code></pre>
 </div>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>codes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(code2<span class="sc">==</span><span class="st">&quot;6006658&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>codes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(code2<span class="sc">==</span><span class="st">"6006658"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   code1   date                code2   uniq   
   &lt;chr&gt;   &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;  
 1 6004319 2017-04-25 00:00:00 6006658 uni_484</code></pre>
 </div>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;6004319&quot;</span>,<span class="st">&quot;6006658&quot;</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>mb <span class="sc">|&gt;</span> <span class="fu">filter</span>(id<span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"6004319"</span>,<span class="st">"6006658"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  gender birth_date age residence stay_ICU entry_date leave_date cost_payer
 1      1   19520404  64       ITA     1080 2017022100 2017042523          1
@@ -1212,13 +1219,13 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 2 6006658 2017
 3 6006658 2018</code></pre>
 </div>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>mb2<span class="ot">&lt;-</span>mb <span class="sc">|&gt;</span> <span class="fu">merge</span>(fid_pid,<span class="at">by.x =</span> <span class="st">&quot;id&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;FID&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>mb2<span class="ot">&lt;-</span>mb <span class="sc">|&gt;</span> <span class="fu">merge</span>(fid_pid,<span class="at">by.x =</span> <span class="st">"id"</span>,<span class="at">by.y=</span><span class="st">"FID"</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>)</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>mb3<span class="ot">&lt;-</span>mb2 <span class="sc">|&gt;</span> <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">&quot;id&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;code1&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">&quot;id&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;code2&quot;</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">acute=</span><span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(code2),<span class="st">&quot;reha&quot;</span>,<span class="st">&quot;&quot;</span>))<span class="sc">|&gt;</span></span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rehab=</span><span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(code1),<span class="st">&quot;acute&quot;</span>,<span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">phase=</span><span class="fu">paste</span>(acute,rehab,<span class="at">sep=</span><span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>acute,<span class="sc">-</span>rehab) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PID)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>mb3<span class="ot">&lt;-</span>mb2 <span class="sc">|&gt;</span> <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">"id"</span>,<span class="at">by.y=</span><span class="st">"code1"</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(codes,<span class="at">by.x=</span><span class="st">"id"</span>,<span class="at">by.y=</span><span class="st">"code2"</span>,<span class="at">all.x=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">acute=</span><span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(code2),<span class="st">"reha"</span>,<span class="st">""</span>))<span class="sc">|&gt;</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rehab=</span><span class="fu">ifelse</span>(<span class="sc">!</span><span class="fu">is.na</span>(code1),<span class="st">"acute"</span>,<span class="st">""</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">phase=</span><span class="fu">paste</span>(acute,rehab,<span class="at">sep=</span><span class="st">""</span>)) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>acute,<span class="sc">-</span>rehab) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(PID)</span>
 <span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>mb3<span class="sc">|&gt;</span> <span class="fu">filter</span>(phase<span class="sc">==</span><span class="st">&quot;acute&quot;</span>)</span></code></pre></div>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>mb3<span class="sc">|&gt;</span> <span class="fu">filter</span>(phase<span class="sc">==</span><span class="st">"acute"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          id gender birth_date age residence stay_ICU entry_date leave_date
 1    6014266      1   19360108  81      2540        0 2017120800 2017121214
@@ -8925,8 +8932,8 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 1282 2020-12-24  uni_968 acute
 1283 2020-12-24  uni_985 acute</code></pre>
 </div>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>tfp<span class="ot">&lt;-</span>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> table <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)</span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PID <span class="sc">%in%</span> tfp<span class="sc">$</span>PID)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>tfp<span class="ot">&lt;-</span>fid_pid <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> table <span class="sc">%&gt;%</span> <span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PID <span class="sc">%in%</span> tfp<span class="sc">$</span>PID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          id gender birth_date age residence stay_ICU entry_date leave_date
 1    6007500      1   19350915  81      6019        0 2017072407 2017072813
@@ -24318,9 +24325,9 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 2562 6022040 2018-10-11 uni_298 acute
 2563    &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;      
 2564    &lt;NA&gt;       &lt;NA&gt;    &lt;NA&gt;      
- [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 3859 rows ]</code></pre>
+ [ reached 'max' / getOption("max.print") -- omitted 3859 rows ]</code></pre>
 </div>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">&quot;0152021&quot;</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">"0152021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        id gender birth_date age residence stay_ICU entry_date leave_date
 1  5211529      1   19981027  17      7078       37 2016051100 2017032111
@@ -24425,7 +24432,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 15    &lt;NA&gt;  reha
 16 uni_436 acute</code></pre>
 </div>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> <span class="fu">table</span>()<span class="sc">%&gt;%</span><span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID) <span class="sc">%&gt;%</span> <span class="fu">table</span>()<span class="sc">%&gt;%</span><span class="fu">data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>Freq) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       PID Freq
 1  0152021   16
@@ -24449,7 +24456,7 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 19 0149799   10
 20 0202240   10</code></pre>
 </div>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID,id,entry_date,phase)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>mb3 <span class="sc">%&gt;%</span> <span class="fu">select</span>(PID,id,entry_date,phase)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         PID      id entry_date phase
 1    0000355 6007500 2017072407      
@@ -31019,24 +31026,24 @@ Attaching package: &#39;dplyr&#39;</code></pre>
 6565    &lt;NA&gt; 6045677 2020123000      
 6566    &lt;NA&gt; 6045705 2020123100      </code></pre>
 </div>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>ids<span class="ot">&lt;-</span>mb3 <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">&quot;0019699&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(id)</span>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>ids<span class="ot">&lt;-</span>mb3 <span class="sc">|&gt;</span> <span class="fu">filter</span>(PID<span class="sc">==</span><span class="st">"0019699"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(id)</span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>fids<span class="ot">&lt;-</span>SCIM_17_20 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(FID <span class="sc">%in%</span> ids<span class="sc">$</span>id) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(DATUM) <span class="sc">%&gt;%</span> <span class="fu">select</span>(FID)</span>
 <span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>cpth<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">&quot;C:/Users/boris/Desktop/data hospital/cpth.rds&quot;</span>)</span>
-<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>ind_cpth <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;C:/Users/boris/Desktop/data hospital/ind_cpth.xlsx&quot;</span>)</span>
-<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>mb4<span class="ot">&lt;-</span>mb3 <span class="sc">%&gt;%</span> <span class="fu">merge</span>(cpth,<span class="at">by.x=</span><span class="st">&quot;id&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;V1&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(ind_cpth,<span class="at">by.x=</span><span class="st">&quot;clipath_code&quot;</span>,<span class="at">by.y=</span><span class="st">&quot;Indication&quot;</span>) </span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>cpth<span class="ot">&lt;-</span><span class="fu">readRDS</span>(<span class="st">"C:/Users/boris/Desktop/data hospital/cpth.rds"</span>)</span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>ind_cpth <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:/Users/boris/Desktop/data hospital/ind_cpth.xlsx"</span>)</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>mb4<span class="ot">&lt;-</span>mb3 <span class="sc">%&gt;%</span> <span class="fu">merge</span>(cpth,<span class="at">by.x=</span><span class="st">"id"</span>,<span class="at">by.y=</span><span class="st">"V1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">merge</span>(ind_cpth,<span class="at">by.x=</span><span class="st">"clipath_code"</span>,<span class="at">by.y=</span><span class="st">"Indication"</span>) </span>
 <span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-11"><a href="#cb94-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;C:/Users/boris/Desktop/SPZ hospital/SPZ-Project&quot;</span>)</span></code></pre></div>
+<span id="cb94-12"><a href="#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/boris/Desktop/SPZ hospital/SPZ-Project"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 
 </main>
 <!-- /main column -->
-<script id = "quarto-html-after-body" type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -31135,6 +31142,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 </div> <!-- /content -->
 
-</body>
 
-</html>
+
+</body></html>

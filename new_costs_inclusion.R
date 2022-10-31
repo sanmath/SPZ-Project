@@ -1,5 +1,5 @@
 #We include more costs
-getwd()
+setwd("C:/Users/boris/Dropbox/PC/Desktop/data hospital")
 stuchrechnung <- read_excel("20211112 Leistungen pro Fall für MEST_Snapshot1.xlsx", 
                             skip = 21)
 
@@ -77,7 +77,16 @@ str(Xjoined)
 writexl::write_xlsx(treat_time,"cost_time.xlsx")
 
 treat_time<-readRDS("Xjoined.RDS")
+saveRDS(treat_time,"treat_time.rds")
+time_cost<-readRDS("treat_time.rds")
+names_costs<-c("id","op_room","anaest","int_care","imag",
+  "lab","physt","ergo","logo","non_med_ter","nurs","psyc","year")
 
+unts<-c("min","min","min","chf","chf","min","min","min","tp","min","tp")
+time_cost
+colnames(time_cost)<-names_costs
+saveRDS(time_cost,"time_cost.rds")
+View(time_cost)
 colnams<-treat_time%>% colnames()
 colnames(treat_time)<-c(colnams[1:12],"year")
 

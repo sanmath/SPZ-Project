@@ -266,9 +266,9 @@ serv_cons1<-serv_cons%>% merge(codes%>% select(code1,uniq),by.x="id",by.="code1"
 serv_cons2<-serv_cons%>% merge(codes%>% select(code2,uniq),by.x="id",by.="code2") %>%
   merge(fid_pid,by.x="id",by.y="FID") %>% mutate(phase="rehab")
 
-colnames(serv_cons_phase)
-serv_cons_phase<-rbind(serv_cons1,serv_cons2)
 
+serv_cons_phase<-rbind(serv_cons1,serv_cons2)
+colnames(serv_cons_phase)
 # We see the number of times that every FID appears in the table and phase
 serv_cons_phase %>% select(PID) %>% 
   table() %>% data.frame() %>% head() %>% arrange(-Freq) |> head()
@@ -279,4 +279,8 @@ serv_cons_phase |> filter(PID=="0000374") %>% select(c(1,"PID",2,3,4,15,"uniq"))
 
 ```
 
-# Add patient information
+# Lesion Level
+
+```{r}
+readxl::read_excel("lesion_level.xlsx")
+```

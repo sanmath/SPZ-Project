@@ -17,3 +17,7 @@ gh<-serv_cons_phase %>% filter(PID=="0000374") %>% select(id)
 gh$id
 SCIM_17_20 %>% filter(FID%in%gh$id) %>% select(FID,SCIM_TOTAL,DATUM,FALL_NR)
 
+serv_cons_phase
+library(dplyr)
+head(data.frame(table(time_cost$id))|> arrange(-Freq),n=410)
+head(data.frame(table(serv_cons$id))|> arrange(-Freq),n=10)

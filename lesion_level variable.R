@@ -47,7 +47,7 @@ les_lev<-(unlist(v1))
 
 mb$les_lev<-les_lev
 
-6537+29
+mb
 
 
 
@@ -56,4 +56,12 @@ mb<-merge(mb,lesion_level,by.x="les_lev",by.y="ICD")
 
 library(ggplot2)
 library(forcats)
-ggplot(mb,aes(x=fct_infreq(Lesion)))+geom_bar()
+ggplot(mb,aes(x=fct_infreq(Lesion)))+geom_bar()+theme(axis.text.x = element_text(angle = 90))
+
+saveRDS(mb,"mb.rds")
+## Paraplegia and tetraplegia it is possible to identify by level of lesion
+# It could be any relation between diagnoses and level of lesion
+# It is possible to get a lower amount of groups by grouping similiar lesion levels
+
+
+

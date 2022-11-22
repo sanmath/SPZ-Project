@@ -99,10 +99,12 @@ MB20a<-MB20 %>% discard(~all(is.na(.) | . ==""))
 MD20a<-MD20 %>% discard(~all(is.na(.) | . ==""))
 MK20a<-MK20 %>% discard(~all(is.na(.) | . ==""))
 
-
+cbind(MK17,MK18,MK19,MK20)
 ## LECTURA DE COSTOS
 
 # Cost data
+
+
 
 cost2017<-read.table("BIC3_SwissDRG_Datensatz 2017.dat",sep = "|",header=FALSE,quote="\"")
 ##consider _norm cost 2018
@@ -110,6 +112,41 @@ cost2018<-read_excel("19-03-29 Abstimmung ITAR_K_SwissDRG_Datensatz.xlsx",sheet=
 
 cost2019<-read.table("MK0000012_ohne_ÜL.txt",sep = "|")
 cost2020<-read.table("MK0000018.txt",sep = "|")
+
+dim(cost2017)
+dim(cost2018)
+dim(cost2019)
+cost2017
+ifelse(is.na(cost2017),0,cost2017)
+cost2017<-apply(cost2017,MARGIN=2,FUN=function(x)ifelse(is.na(x),0,x))
+time_cost %>% select(id) %>% table()%>%data.frame() %>% arrange(-Freq)
+time_cost %>% filter(id=="5211529")
+
+sum(cost2017[,76])
+sum(cost2018[,76])
+sum(cost2019[,76])
+sum(cost2020[,76])
+
+
+names_costs<-colnames(cost2018[,1:75])
+
+c2017<-cost2017[,1:75]
+c2018<-cost2018[,1:75]
+c2019<-cost2019[,1:75]
+c2020<-cost2020[,1:75]
+
+colnames(c2017)<-names_costs
+colnames(c2018)<-names_costs
+colnames(c2019)<-names_costs
+colnames(c2020)<-names_costs
+
+
+codes %>% filter(code1=="6035777")
+costs_dat %>% filter(FID==costs_dat)
+
+costs_dat<-rbind(c2017,c2018,c2019,c2020)
+colnames(costs_dat)
+costs_dat %>% filter(FID==6036398) 
 
 ## generation base MB
 

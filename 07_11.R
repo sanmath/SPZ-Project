@@ -1,7 +1,7 @@
 ## Consolidation data hospital
 
 serv_cons$id
-
+serv_cons
 A<-serv_cons%>% merge(codes%>% select(code1,uniq),by.x="id",by.="code1") %>%
   merge(fid_pid,by.x="id",by.y="FID") %>% mutate(phase="acu")
 

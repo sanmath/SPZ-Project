@@ -1,6 +1,9 @@
 serv_cons_phase$id
-Tab1<-mb %>% group_by(id)%>% summarize(lesion=first(Lesion),length_stay=first(length_stay))
+library(dplyr)
+Tab1<-mb_final %>% group_by(id)%>% summarize(length_stay=sum(length_stay),gender=first(gender))
 
+data.frame(table(mb$id))
+colnames(mb_final)
 Servs<-serv_cons_phase  %>% merge(Tab1,by="id")
 
 unique(Servs$lesion)
@@ -28,10 +31,12 @@ ggplot(servs_gender,aes(x=log(value2),fill=gender))+
   geom_histogram()+xlim(0, 8)
 
 colnames(servs_gender)
-entry<-substr(mb$entry_date,1,8)
-leave<-substr(mb$leave_date,1,8)
+entry<-substr(mb$entry,1,8)
+leave<-substr(mb$leave,1,8)
 leave<-as.Date(leave,"%Y%m%d")
 entry<-as.Date(entry,"%Y%m%d")
 
 length_stay<-difftime(leave,entry,units=c("days"))
 mb$length_stay<-length_stay
+
+

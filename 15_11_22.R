@@ -3,8 +3,8 @@
 
 
 #Diagnosis main and secondary
-test<-mb%>%select("main_diag",grep(colnames(mb),pattern="sec_diag"))
-
+test<-mb%>%select("main_diag",grep(colnames(mb),pattern="add_diag"))
+dim(test)
 #We create a matrix with TRUE and FALSE to check which diagnoses from the levels table is 
 matriz<-apply(test,MARGIN=2,FUN=function(x)grepl(
   "G8260|G8261|G8262|G8263|G8264|G8265|G8266|G8267|G8269|S1470|S1471|S1472|S1473|S1474|S1475|S1476|S1477|S1478|S2470|S2471|S2472|S2473|S2474|S2475|S2476|S2477|S347|S3471|S3472|S3473|S3474|S3475|S3476|S3477",x))
@@ -49,11 +49,14 @@ mb$les_lev<-les_lev
 
 6537+29
 
-
+table(mb$les_lev)
 
 lesion_level<-readxl::read_excel("lesion_level.xlsx")
 mb<-merge(mb,lesion_level,by.x="les_lev",by.y="ICD")
-
+mb_final$Clinical.Pathway
+colnames(mb_final)
+mb_final$Lesion1<-substr(x = mb_final$Lesion,1,1)
 library(ggplot2)
 library(forcats)
-ggplot(mb,aes(x=fct_infreq(Lesion)))+geom_bar()
+ggplot(mb_final,aes(x=fct_infreq(Lesion1),fill=Lesion1))+geom_bar()+scale_fill_manual(values=colores)
+       

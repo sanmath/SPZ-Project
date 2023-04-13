@@ -1,29 +1,50 @@
+------------------------------------------------------------------------
+
 ---
 title: "Data Model SPZ"
 format: html
 editor: visual
 ---
 
-```{r}
+# Data loading
+
+```{r,message=FALSE}
+
 library(knitr)
 library(readxl)
 library(dplyr)
 library(ggplot2)
 library(gt)
+library(tidyr)
+library(ggstatsplot)
+library(treemap)
+library(ggpubr)
+library(grid) 
+library(RColorBrewer)
+library(ggsci)
+library(ggpubr)
+library(forcats)
+library(icd.data)
+library(treemap)
 
 
-#We upload data
+#colors
+palet <- get_palette(palette="lancet",10)
+
+
+
+#We upload Data
 codes <- read_excel("C:/Users/boris/Desktop/data hospital/codes_2phases.xlsx")
-head(codes)
 
 # SCIM values 2017-2020
 SCIM_17_20 <- read_excel("C:/Users/boris/Desktop/data hospital/Auswertung_SCIM_2017-20201.xlsx")
 
-colnames(SCIM_17_20)
+
+
 # We convert the patient code to character
 
-SCIM_17_20<-SCIM_17_20 %>% mutate(FID=as.character(FID))
-head(SCIM_17_20)
+SCIM_17_20 <- SCIM_17_20 %>% mutate(FID=as.character(FID))
+
 
 ```
 
@@ -32,14 +53,16 @@ From the previous data set we need to know that the key variable that identifies
 -   FID: Fallidentifikationsnummer
 
 ```{r}
-SCIM_17_20 %>% select(FID)%>%table() %>%data.frame()%>%select(Freq)%>% table()
+SCIM_17_20 %>% select(FID) %>% table() %>% 
+  data.frame()%>%select(Freq)%>% table()
 
 ```
 
-From the last outcome we observe that there are FID repeated at most twice. It probably means two different SCIM values. In fact Let's select the first five FID values.
+From the last outcome we observe that there are *FID* repeated at most twice. It probably means two different SCIM values. In fact let's select the first five FID values.
 
 ```{r}
-fives<-SCIM_17_20 %>% select(FID)%>%table() %>%data.frame()%>% head(n=5) %>% select(FID)
+fives <- SCIM_17_20 %>% select(FID) %>% table() %>% data.frame() %>%
+  head(n=5) %>% select(FID)
 
 fives
 
@@ -49,7 +72,7 @@ SCIM_17_20 %>% filter(FID %in% fives$FID)%>%select(FID,SCIM_TOTAL,DATUM) %>% arr
 
 # Analysis two phases
 
-Here we consider the dataset *codes*, remember that the data set codes has two columns *code1* and *code2*. Both codes corresponds to the same **patient**, in different phases. Therefore, is important to keep in mind this feature because based on these codes we will analyze the evolution of SCIM values.
+Here we consider the data set **codes** This data set has two columns **code1** and **code2**. Both codes corresponds to the same **patient**, in different phases. Therefore, is important to keep in mind this feature because based on these codes we will analyze the evolution of SCIM values and it will help us to aggregate cases.
 
 -   code 1: Acute Phase
 -   code 2: Rehabilitation Phase
@@ -76,23 +99,42 @@ The data set **fid_pid** is a data set that contains a correspondence between FI
 
 -   PID: Patienten fallnummer that is the patient case number.
 
-```{r}
-
-mb<-readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/mb.rds")
-fid_pid <-  readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/fidpid.rds")
 head(mb)
-fid_pid%>%select(PID)%>%table()%>%data.frame()%>%select(Freq)%>% table()|> data.frame()
-colnames(mb)
+
+```{r}
+mb<-readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/mb.rds")
+
+asiaclass<-readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/asiaclass.rds")
+
+mb_asia<-merge(mb,asiaclass,by.x="id",by.y="FID")
+
+
+
+
+fid_pid <-  readRDS("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project/fidpid.rds")
+
+
+
+fid_pid %>% select(PID) %>% table() %>% data.frame() %>% 
+  select(Freq) %>% table()|> data.frame() 
+
 
 ```
+
+In the previous table we could appreciate that the frequencies of each patient PID is at most 14.
 
 # Variables time and cost of interventions
 
 We include variables that represent the time and cost for each intervention to every patient
 
 ```{r}
-time_cost<-readRDS("time_cost.rds")
-serv_cons<-time_cost%>% select(-year) %>% group_by(id) %>% 
+time_cost <- readRDS("time_cost.rds")
+## Important to discuss--- here we are aggregating by year....
+#Therefore the estimations are given for all the period
+
+## SUGGESTION: What about if we present first a descriptive analyisis of the amounts by year:
+
+serv_cons <- time_cost %>% select(-year) %>% group_by(id) %>% 
   summarize(op_room=sum(op_room),anaest=sum(anaest),int_care=sum(int_care),imag=sum(imag),lab=sum(lab),physt=sum(physt),ergo=sum(ergo),logo=sum(logo),non_med=sum(non_med_ter),nurs=sum(nurs),psyc=sum(psyc))
 
 ```
@@ -127,26 +169,30 @@ time_cost %>% select(id) %>% table() %>% data.frame() %>% arrange(-Freq) %>% hea
 
 fid_pid %>% select(FID) %>% table() %>% data.frame()%>% arrange(-Freq) %>% head(n=8)
 
-fid_pid %>% select(PID) %>% table() %>% data.frame()%>% arrange(-Freq) %>% head(n=8)
+fid_pid %>% select(PID) %>% table() %>% data.frame()%>% arrange(PID) %>% head(n=100)
 ```
 
 From the previous summaries we observe that in the table *fip_pid*, there are some *PID* codes repeated $16$ times. It means that the patient considered was \$16\$ times in the clinic, each time with a different FID code.
 
-```{r}
-fid_pid |> filter(PID=="0152021")
-
-fid_pid |> filter(PID=="0152021") |> select(FID) |> unique() |> nrow()
-
-```
-
 In order to analyze the evolution of the SCIM value we consider the next steps.
 
-Due to the importance of track the acute and rehabilitation phase we merge the mb dataset with codes. Note that an important issue could be the treatment of the codes for acute and rehabilitation phase. In order to deal with that we proceed as follows:
+Due to the importance of track the acute and rehabilitation phase we merge the mb data set with the data set codes. Note that an important issue could be the treatment of the codes for acute and rehabilitation phase.
+
+In order to deal with that we proceed as follows:
 
 ```{r}
 # We create a code uni_n in the codes table
+
 codes$uniq<-paste("uni",1:nrow(codes),sep="_")
 head(codes,n=10)
+
+codes_asia1<-codes|>merge(asiaclass,by.x="code1",by.y="FID")
+codes_asia2<-codes|>merge(asiaclass,by.x="code2",by.y="FID")
+
+
+codes_asia<-rbind(codes_asia1,codes_asia2)
+
+
 SCIM_17_20 %>% select(FID) %>% unique() %>% nrow()
 
 # Note that when we merge SCIM_17_20 with codes not all codes match, because
@@ -170,10 +216,10 @@ P2 <- P1 %>% merge(codes,by.x="FID",by.y="code2",all.x=TRUE)
 head(P2[c(71,72,73,74,449,450,451,452),])
 ```
 
-If everything is ok, when uniq.x has any value uni.y should be with \<NA\> and viceversa. The next chunk evaluates if both columns uniq.x and uniq.y are not empty at the same time.
+If everything is ok, when uniq.x has any value uni.y should be with \<NA\> and reversal. The next chunk evaluates if both columns uniq.x and uniq.y are not empty at the same time.
 
 ```{r}
-P2 %>% filter(uniq.x!=""&uniq.y!="")
+#P2 %>% filter(uniq.x!=""&uniq.y!="")
 ## 0 rows has both values empty at the same time
 
 P2$uniq.x<-ifelse(is.na(P2$uniq.x),"",P2$uniq.x)
@@ -188,60 +234,49 @@ P2$rehab<-ifelse(P2$uniq.y=="","","rehab")
 P2$phase<-paste(P2$acute,P2$rehab,sep="")
 
 P3<-P2%>% select(unique,FID,code1,code2,phase,SCIM_TOTAL)
-head(P2)
-head(P3)
+#head(P2)
+#head(P3)
 tabl<-table(P3$unique)%>% data.frame() %>% arrange(-Freq)
 head(tabl)
-P3%>%filter(unique %in% tabl[-1,]$Var1) %>% merge(fid_pid,by.x="FID",by.y="FID")%>% arrange(PID,unique)%>% head(n=20)
+#P3%>%filter(unique %in% tabl[-1,]$Var1) %>% merge(fid_pid,by.x="FID",by.y="FID")%>% arrange(PID,unique)%>% head(n=20)
 P4<-P3%>%filter(!is.na(FID))
 #merge(P4,fid_pid,by.x="FID",by.y="FID") %>% select(PID) %>% table() %>% data.frame()
 ```
 
 ```{r}
-P4%>% colnames()
-head(P4)
-
 
 P5<-P3%>%filter(!is.na(FID))%>%merge(P4,fid_pid,by.x="FID",by.y="FID")
 
-head(P5)
+
 ```
 
 ```{r}
-mb %>% select(id) |> table() |> data.frame() |> filter(Freq==2) |> head(n=15)
 
-mb |> filter(id=="6006658")
 
-codes %>% filter(code2=="6006658")
+mb2 <- mb  |> merge(fid_pid,by.x = "id",by.y="FID",all.x=TRUE)
 
-mb |> filter(id%in% c("6004319","6006658"))
-
-mb2<-mb |> merge(fid_pid,by.x = "id",by.y="FID",all.x=TRUE)
-
-mb3<-mb2 |> merge(codes,by.x="id",by.y="code1",all.x=TRUE) |> 
+mb3 <- mb2 |> merge(codes,by.x="id",by.y="code1",all.x=TRUE) |> 
   merge(codes,by.x="id",by.y="code2",all.x=TRUE) %>% mutate(acute=ifelse(!is.na(code2),"reha",""))|>
   mutate(rehab=ifelse(!is.na(code1),"acute","")) %>% mutate(phase=paste(acute,rehab,sep="")) %>% select(-acute,-rehab) %>% arrange(PID)
 
-mb3|> filter(phase=="acute")
 
-tfp<-fid_pid %>% select(PID) %>% table %>% data.frame() %>% arrange(-Freq)
-mb3 %>% filter(PID %in% tfp$PID)
-mb3 %>% filter(PID=="0152021")
-mb3 %>% select(PID) %>% table()%>%data.frame() %>% arrange(-Freq) %>% head(20)
-mb3 %>% select(PID,id,entry_date,phase)
-ids<-mb3 |> filter(PID=="0019699") %>% select(id)
-fids<-SCIM_17_20 %>% filter(FID %in% ids$id) %>% arrange(DATUM) %>% select(FID)
+tfp <- fid_pid %>% select(PID) %>% table %>% data.frame() %>% arrange(-Freq)
+
+ids <- mb3 |> filter(PID=="0019699") %>% select(id)
+fids <- SCIM_17_20 %>% 
+  filter(FID %in% ids$id) %>% arrange(DATUM) %>%
+  select(FID)
 
 
-
+#Clinical pathways
 cpth<-readRDS("C:/Users/boris/Desktop/data hospital/cpth.rds")
 ind_cpth <- read_excel("C:/Users/boris/Desktop/data hospital/ind_cpth.xlsx")
-mb4<-mb3 %>% merge(cpth,by.x="id",by.y="V1") %>%
+mb4 <- mb3 %>% merge(cpth,by.x="id",by.y="V1") %>%
   merge(ind_cpth,by.x="clipath_code",by.y="Indication") 
 
 
+
 #setwd("C:/Users/boris/Desktop/SPZ hospital/SPZ-Project")
-mb4
 
 
 ```
@@ -251,7 +286,7 @@ mb4
 serv_cons: contains the aggregated information of FID and units of interventions:
 
 ```{r}
-head(serv_cons)
+#head(serv_cons)
 
 time_cost<-readRDS("time_cost.rds")
 serv_cons<-time_cost%>% select(-year) %>% group_by(id) %>% 
@@ -270,8 +305,8 @@ serv_cons2<-serv_cons%>% merge(codes%>% select(code2,uniq),by.x="id",by.="code2"
   merge(fid_pid,by.x="id",by.y="FID") %>% mutate(phase="rehab")
 
 
-serv_cons_phase<-rbind(serv_cons1,serv_cons2)
-colnames(serv_cons_phase)
+serv_cons_phase <- rbind(serv_cons1,serv_cons2)
+
 # We see the number of times that every FID appears in the table and phase
 serv_cons_phase %>% select(PID) %>% 
   table() %>% data.frame() %>% head() %>% arrange(-Freq) |> head()
@@ -285,60 +320,74 @@ serv_cons_phase |> filter(PID=="0000374") %>% select(c(1,"PID",2,3,4,15,"uniq"))
 # Lesion Level
 
 ```{r}
-library(grid) # for unit()
-library(RColorBrewer)
-library(ggsci)
-library(ggpubr)
 
-get_palette(palette="lancet",12)
+
+colores <- get_palette(palette="lancet",12)
 get_palette(palette="futurama",12)
 get_palette(palette="simpsons",12)
 get_palette(palette="tron",12)
-paleta<-get_palette(palette="simpsons",k = k)
-
-k1<-length(unique(mb_final$Lesion))
-
-myPal <- cols(length(unique(mb_final$Lesion)))
+#paleta<-get_palette(palette="simpsons",k = k)
 
 
-mb %>% ggplot(aes(x=Lesion,fill=Lesion))+geom_bar(stat = "count")+theme(axis.text.x = element_text(angle = 90))+ coord_flip()+scale_fill_manual(values=paleta)
 
+
+mb %>% ggplot(aes(x=Lesion.x,fill=Lesion.x))+geom_bar(stat = "count")+theme(axis.text.x = element_text(angle = 90))+ coord_flip()
+
+#Mb_final is mb buth included clinical pathways
 mb_final<-mb |> merge(cpth,by.x="id",by.y="V1") |>merge(ind_cpth,by.x="clipath_code",by.y="Indication") 
-table(ind_cpth$Indication)
 
-unique(cpth$clipath_code)
-mb |> merge(cpth,by.x="id",by.y="V1") |> select(clipath_code) |> unique()|> nrow()
+#lesion_level<-readxl::read_excel("lesion_level.xlsx")
+lesion_level<-readRDS("level_of_lesion.rds")
+ mb_les<-merge(mb_final,lesion_level,by.x="id",by.y="FID")
 
 
 
-mb_final$Lesion1<-substr(x = mb_final$Lesion,1,1)
 
-ggplot(mb_final,aes(x=fct_infreq(Lesion1),fill=Lesion1))+
-  geom_bar()+scale_fill_tron()
 
-#Threemap
 
-library(treemap)
-tabtree<-mb_final |> select(main_diag,Lesion1)|> table()|> data.frame() |> group_by(main_diag,Lesion1)|>summarize(tot=sum(Freq))|>filter(main_diag!="")
 
-mb_final$main_diag
-mb_final$Lesion1       
-tabtree
-palet<-get_palette(palette="lancet",10)
-treemap(tabtree,index=c("Lesion1","main_diag"),vSize="tot",type="index",palette=palet)
 
-library(icd.data)
-icd.data::icd10cm2016
+
+#icd.data::icd10cm2016
 mb_final$icddesc<-substr(mb_final$main_diag,1,3) 
 
-unique(mb_final$icddesc)
 
-desc<-icd.data::icd10cm2016 |> filter(code%in% 
+desc <- icd.data::icd10cm2016 |> filter(code%in% 
 unique(mb_final$icddesc))|>select("code","short_desc")|>data.frame()
 
 mb_final<-mb_final|>merge(desc,by.x="icddesc",by.y="code")
-tabtree<-mb_final |> select(Lesion1,short_desc)|> table()|> data.frame() |> group_by(Lesion1,short_desc)|>summarize(tot=sum(Freq))
-tabtree
-treemap(tabtree,index=c("Lesion1","short_desc"),vSize="tot",type="index",palette=palet)
 
+```
+
+```{r}
+
+serv2 <- serv_cons_phase|> merge(cpth,by.x="id",by.y="V1") |>merge(ind_cpth,by.x="clipath_code",by.y="Indication")
+#We compute the total lenght of stay for each id (FID)
+#Tab1 is the mb grouped by id in order to get length of stay, gender and age
+Tab1<-mb_final %>% group_by(id)%>% summarize(length_stay=sum(length_stay),gender=first(gender),age=first(age_admi),les=first(les))
+colnames(mb_final)
+Tab1$length_stay<-as.numeric(Tab1$length_stay)
+
+serv3 <- serv2|>merge(Tab1,by.x="id",by.y="id")|>
+  mutate(psy1=psyc/length_stay,
+         op=op_room/length_stay,
+         ana=anaest/length_stay,nurs=nurs/length_stay,int_care=int_care/length_stay,img=imag/length_stay,lb=lab/length_stay,incare=int_care/length_stay,ergo=ergo/length_stay)|>select(op,ana,img,nurs,lb,incare,Clinical.Pathway)|>group_by(Clinical.Pathway)|>
+  summarize(avg_op=mean(op,na.rm=TRUE),avg_ana=mean(ana,na.rm=TRUE),avg_img=mean(img,na.rm=TRUE),avg_lb=mean(lb,na.rm=TRUE),avg_incare=mean(incare,na.rm=TRUE))
+
+ 
+
+serv_ersrehab<-serv2|>merge(Tab1,by.x="id",by.y="id")|>
+  mutate(psy1=psyc/length_stay,
+         op=op_room/length_stay,
+         ana=anaest/length_stay,nurs=nurs/length_stay,int_care=int_care/length_stay,img=imag/length_stay,lb=lab/length_stay,incare=int_care/length_stay,ergo=ergo/length_stay)|>select(PID,les,id,age,psy1,op,ana,img,nurs,lb,incare,Clinical.Pathway,gender)|>filter(Clinical.Pathway=="Erstrehabilitation")
+
+serv_ersrehab|>group_by(gender)|> summarize(mean(psy1))
+
+
+tab2<-serv2|>merge(Tab1,by.x="id",by.y="id")
+#
+tab22<-tab2 |> filter(Clinical.Pathway=="Erstrehabilitation",phase=="rehab") 
+
+tab22asia<-tab22|>merge(codes_asia,by.x="id",by.y="code2")
+tab22_lev<-tab22asia|>merge(lesion_level,by.x="code1",by.y="FID")
 ```

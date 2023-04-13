@@ -203,7 +203,7 @@ mb_def2$V16<-substring(mb_def2$V16,first = 1,last = 8 )
 mb_def2$V26<-substring(mb_def2$V26,first = 1,last = 8 )
 mb_def2$V26<-as.Date(mb_def2$V26,format = "%Y %m %d")
 mb_def2$V16<-as.Date(mb_def2$V16,format = "%Y %m %d")
-
+# Creation of length of stay
 mb_def2<-mb_def2 %>% mutate(ndays=as.numeric(V26-V16))
 saveRDS(mb_def2,"mb_def2.rds")
 

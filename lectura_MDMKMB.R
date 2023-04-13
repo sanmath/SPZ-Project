@@ -43,7 +43,7 @@ num<-sort(rep(seq(1,1884,1),3))
 idpat<-paste("pt",num,sep="_")
 data_2019a$idpat<-idpat
 
-
+library(readxl)
 ## year 2020
 data_2020 <- read_excel("BFS-Datensatz 2020.xlsx",col_names = FALSE)
 data2020<-data_2020%>%mutate(year=2020)
@@ -63,7 +63,6 @@ colnames(data_2020a)<-colnames(data_2017a)
 MB17<-data_2017a%>%filter(V1=="MB")
 MD17<-data_2017a%>%filter(V1=="MD")
 MK17<-data_2017a%>%filter(V1=="MK")
-
 
 MB17a<-MB17 %>% discard(~all(is.na(.) | . ==""))
 MD17a<-MD17 %>% discard(~all(is.na(.) | . ==""))
@@ -141,8 +140,6 @@ colnames(c2019)<-names_costs
 colnames(c2020)<-names_costs
 
 
-codes %>% filter(code1=="6035777")
-costs_dat %>% filter(FID==costs_dat)
 
 costs_dat<-rbind(c2017,c2018,c2019,c2020)
 colnames(costs_dat)
@@ -155,17 +152,24 @@ v30<-paste("V",seq(30,39,1),sep="")
 #treatments
 v40<-paste("V",seq(40,50,1),sep="")
 #I select interest variables and create year to know from which table comes every row.
-mb17<-MB17a%>%select(V11,V12,V13,V14,V16,V22,V25,v30,v40)%>%mutate(id=MD17a$V663,year=2017)
-mb18<-MB18a%>%select(V11,V12,V13,V14,V16,V22,V25,v30,v40)%>%mutate(id=MD18a$V663,year=2018)
-mb19<-MB19a%>%select(V11,V12,V13,V14,V16,V22,V25,v30,v40)%>%mutate(id=MD19a$V663,year=2019)
-mb20<-MB20a%>%select(V11,V12,V13,V14,V16,V22,V25,v30,v40)%>%mutate(id=MD20a$V663,year=2020)
+#
+mb17<-MB17a%>%select(V11,V12,V13,V14,V16,V21,V22,V25,V26,V28,v30,v40)%>%mutate(id=MD17a$V663,year=2017)
+mb18<-MB18a%>%select(V11,V12,V13,V14,V16,V21,V22,V25,V26,V28,v30,v40)%>%mutate(id=MD18a$V663,year=2018)
+mb19<-MB19a%>%select(V11,V12,V13,V14,V16,V21,V22,V25,V26,V28,v30,v40)%>%mutate(id=MD19a$V663,year=2019)
+mb20<-MB20a%>%select(V11,V12,V13,V14,V16,V21,V22,V25,V26,V28,v30,v40)%>%mutate(id=MD20a$V663,year=2020)
 
 mb<-bind_rows(mb17,mb18,mb19,mb20)
-
-
+colnames(mb)
+mb2212<-bind_rows(mb17,mb18,mb19,mb20)
+mb221222<-mb2212
+getwd()
+saveRDS(mb221222,"mb250123.RDS")
 library(icd.data)
 ICD<-icd10cm2016 %>% select(code,three_digit,short_desc,chapter)
 
 
 
 colnames(mb)
+colnames(mb)
+head(mb)
+

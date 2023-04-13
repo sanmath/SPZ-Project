@@ -1,0 +1,286 @@
+---
+title: "Modelling Severity of Services"
+author: "Swiss Paraplegic Forschrung"
+date: "2023-04-06"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+bibliography: bib_act.bib
+---
+
+## Modelling Framework
+
+The next model aims to explain the severity of services in terms of the total number hours of services that a patient from the clinic receives and their respective determinants. On one hand the length of stay defines the time that an individual facing a lesion in the spinal cord injury spends in the clinic independently of  the service received. On the other hand we consider the intensity of care related to each service. The available services that we consider in the analysis are the following:
+
+\begin{itemize}
+\item Physioteraphy
+\item Ergotherapy
+\item Logopaedics
+\item Intensive Care Nursing
+\item Non medical therapies
+\item Psychology
+\item Anaesthesia
+\item Nursing
+\item Imaging
+\item Laboratory
+\end{itemize}
+
+The modelling was based in the paper Modelling the burden of longterm care for institutionalised elderly based on care duration and intensity written by Martin Bladt and colleagues [@intensity_2023]. 
+The idea is to  consider that the *Intensity of Service* ( total number of hours of service received ) can be modeled by multiplying the duration or *lenght of stay*  that is the time spent in the clinic, with the *intensity of care* that is the amount of service received expressed in minutes or swiss francs. 
+This approach is well established  in actuarial practice for example we can find similar ideas in [@frees2011predicting]. These ideas are based in the well known Compound Poisson Risk model [@panjer1983compound].  We will decompose the analysis in two stages, the first is the modeling of Lenght of stay and then the modeling of the intensity of care. This two stage approach allows us to investigate the time spent in the institution and the amount of care received.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Length of Stay
+
+
+The length of stay was constructed by the difference between two date type variables, more specifically we considered the difference between the date of entry to the clinic and the leaving date. The next histogram shows main features of this variable:
+
+```{r }
+pacman::p_load(knitr,reshape,dplyr,ggstatsplot,
+               ROSE,ggsci,grDevices,VGAM,jtools,
+               RColorBrewer,ggpubr,fishmethods,
+               ggplot2,ggsci,margins,car,dplyr,scales,reshape2,varhandle,did)
+colores<-get_palette(palette = "lancet",29)
+
+dataset<-readRDS("tab_varnew.rds")
+dataset$gender2<-as.factor(dataset$gender2)
+ggplot(dataset,aes(x=length_stay.x,color=gender2,fill=gender2))+
+  geom_histogram(alpha=0.1,bins = 20,position="identity")+
+  scale_color_manual(values=c("blue","red"))+ scale_fill_manual(values=c("blue","red"))
+
+
+
+
+```
+
+
+- In the histogram presented above, we can see that there is a difference in the density distributions of the length of stay by gender. However, the shape is quite similar. Moreover for both cases we observe extreme values that possible are due to cases with complications that requires more medical services.
+- We observe that in the dataset there were more male patients  than female patients with a higher value of length of stay.
+
+- Based in the shape of the histogram we could consider that the normal distribution is a good candidate for fitting the observed durations. 
+
+
+
+
+```{r,fig.align='center'}
+dataset|>group_by(PID)|>
+  dplyr::summarize(N0=n(),gender=first(gender2),los=mean(length_stay.x))|>
+  group_by(gender)|>dplyr::summarize(N=n(),mlos=mean(los))|>
+  as.data.frame()|>kable()
+```
+
+## Length of stay model.
+
+To model the length of stay that we are going to call $D$, we first asses its distribution by fitting the observed durations with distributions commonly established in the literature. We consider a zero truncated negative binomial distribution that is a negative binomial distribution conditional on it taking positive values. That characteristic is well suited for our data due to there are not cases with null length of stay values in the sample. Details about this approach could we found in some literature as [@neg_bin_med,@yang2015negative]. The computations were performed with the library VGAM for vector generalized and additive models technical details about this package could be found in [@yee2015vector]. 
+
+```{r}
+los<-dataset|>group_by(id)|>summarize(los=mean(length_stay.x))
+fitdistrplus::fitdist(los$los, "nbinom")
+los<-los|>mutate(simlos=rnbinom(400,size = 3.15559,mu=150.63))
+ggplot(los,aes(x=los))+geom_density(aes(color="real data"))+
+  geom_density(aes(x=simlos,color="simulated data"))+
+  labs(title = "Densities Length of Stay")+
+  scale_color_manual(name='Densities LOS',
+                     breaks=c('real data', 'simulated data'),
+                     values=c('real data'='blue', 'simulated data'='red'))
+
+```
+
+# Regression Estimation 
+
+```{r,echo=FALSE}
+
+data_regression<-dataset|>
+  group_by(id,group1)|>
+  summarize(mean_logo=mean(logo),
+            mean_psyc=mean(psyc),
+            mean_imag=mean(imag),
+            mean_lab=mean(lab),
+            mean_nurs=mean(nurs),
+            mean_anaest=mean(anaest),
+            mean_int_care=mean(int_care),
+            mean_ergo=mean(ergo),
+            mean_physt=mean(physt),
+            mean_non_med=mean(non_med),
+            mean_los=mean(length_stay.x),
+            N=n(),
+            sex=first(gender.x),
+            etiology=first(etiology),
+            age_group=first(age_group),
+            injury_group=first(group1),
+            stay_aft_leav=first(stay_aft_leav2),
+            main_cost=first(main_cost_center),
+            group_level=first(group_level),
+            ins_class=first(ins_class),
+            ins_type=first(ins_type),
+            SCIM=mean(SCIM_TOTAL,na.rm=TRUE),
+            age=first(age))
+
+data_regression$main_cost<-as.factor(data_regression$main_cost)
+
+data_regression<-data_regression|>filter(group1!="ND")
+m1<-vglm(mean_los~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression,family=posnegbinomial())
+summ1<-summary(m1)
+
+
+```
+
+The log likelihood of the model is $-1858.561$. From the summary of the zero-truncated negative binomial regression model, the variable sex2 corresponding to female patients, has an estimated coefficient $0.043372$ that is not significant, because the p-value is $0.4569>0.05$ which means that the log count of days in the clinic  is unperceivable higher compared to male patients by $0.04$ when the other covariates are the same.
+
+Regarding the age group we have that for age groups $[45,60]$ and $>75$ the estimated coefficients are $0.16$ and $-0.20$ respectively, indicating that the log count of days in the clinic are higher compared to the age group $[10,31]$ and lower for the age group $>75$   by $-0.20$ when the other variables are the same.
+
+Additionally, we have that the estimated coefficient of the group Paraplegia, ASIA A,B,C,D is $-0.2177$ suggesting that log counts of lenght of stay for patients in this group is less than the group $C1-C4, ASIA A,B,C,D$ by $0.21$ when the other covariates keep constant.
+Regarding the variable stay after leaving, indicates that for patients with discharge destination Home or Nursing home the log of the length of stay is significantly higher by $0.89$ and $0.74$ respectively. Finally, we observe the  SCIM value has a negative significant coefficient indicating that for each unit the log of LOS decreases $-0.015616$ for each SCIM increase when the other variables keep the same.
+
+Moreover, we observe two estimated coefficients for two intercepts, the first one ((Intercept):1) is 4.71, that can be interpreted as the typical intercept indicating the log count of the stay when all the predictos are equal to zero. The value of the second intercept ((intercept):2) is the overdispersion parameter (alpha) that is equals to $1.5357$.
+
+
+
+```{r}
+knitr::kable(summ1@coef3)
+```
+
+
+## Intensity of Care 
+
+We define the intensity of care as the amount of time spent in an specific service from the services mentioned above. First we show the histograms of the intensity of care for each service in the sample.
+
+```{r,echo=FALSE,fig.height=15,fig.width=9,fig.align='center'}
+
+p1<-data_regression|>ggplot(aes(x=mean_psyc))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[1],color="black",bins = 10,alpha=0.4)+
+  labs(title="Psychology")+geom_density(size=1,col=colores[1])
+
+p2<-data_regression|>ggplot(aes(x=mean_logo))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[2],color="black",bins = 20,alpha=0.4)+
+  labs(title="Logotherapy")+
+  geom_density(size=1,col=colores[2],adjust=5)+ylim(c(0,0.001))
+
+p3<-data_regression|>ggplot(aes(x=mean_imag))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[3],color="black",bins = 10,alpha=0.4)+
+  labs(title="Imaging")+geom_density(size=1,col=colores[3])
+
+p4<-data_regression|>ggplot(aes(x=mean_lab))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[4],color="black",bins = 10,alpha=0.4)+
+  labs(title="Laboratory")+geom_density(size=1,col=colores[4])
+
+p5<-data_regression|>ggplot(aes(x=mean_anaest))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[5],color="black",bins = 10,alpha=0.4)+
+  labs(title="Anaesthesia")+geom_density(size=1,col=colores[5])
+
+p6<-data_regression|>ggplot(aes(x=mean_int_care))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[6],color="black",bins = 10,alpha=0.4)+
+  labs(title="Intensive Care")+geom_density(size=1,col=colores[6],adjust=30)+ylim(c(0,0.00025))
+
+p7<-data_regression|>ggplot(aes(x=mean_ergo))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[7],color="black",bins = 10,alpha=0.4)+
+  labs(title="Ergotherapy")+geom_density(size=1,col=colores[7])
+
+p8<-data_regression|>ggplot(aes(x=mean_nurs))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[8],color="black",bins = 10,alpha=0.4)+
+  labs(title="Nursing")+geom_density(size=1,col=colores[8])
+
+p9<-data_regression|>ggplot(aes(x=mean_non_med))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[9],color="black",bins = 10,alpha=0.4)+
+  labs(title="Non Medical Therapies")+geom_density(size=1,col=colores[9])
+
+p10<-data_regression|>ggplot(aes(x=mean_physt))+
+  geom_histogram(aes(y = after_stat(density)),fill=colores[10],color="black",bins = 10,alpha=0.4)+
+  labs(title="Phisiotherapy")+geom_density(size=1,col=colores[10])
+
+
+plot<-ggarrange(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,ncol = 2,nrow = 5)
+
+annotate_figure(plot, top = text_grob("Intensity of Service", 
+                                      color = "black", face = "bold", size = 14))
+```
+
+## Regression Estimation Severity of Service
+
+
+Now we perform estimations of the intensity of  service for each service described above,  More specifically given a set of $n=10$ services expressed as follows:
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE,fig.align="center"}
+library(kableExtra)
+services<-c("Anaesthesia","Intensive Care","Imaging","Laboratory",
+            "Physiotherapy","Ergotherapy","Logotheraphy","Non Medical Therapies","Nursing","Psychology")
+units<-c("min","min","CHF","CHF","min","min","min","min","min","min")
+serv_units<-data.frame(Services=services,Units=units)
+
+kbl(serv_units,booktabs = T)%>% kable_styling(position = "center")
+```
+
+We are going to proceed by considering some of the most common models in the literature for severity analysis. First since we note we are dealing with positive values, greater or equal to zero..
+
+```{r}
+library(ISLR)
+library(survival)
+
+m1_sev<-glm(mean_logo~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_logo>0),family= gaussian(link='log'))
+
+
+m2_sev<-glm(mean_psyc~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_psyc>0),family= gaussian(link='log'))
+
+m3_sev<-glm(mean_imag~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_imag>0),family= gaussian(link='log'))
+
+m4_sev<-glm(mean_lab~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_lab>0),family= gaussian(link='log'))
+
+
+m5_sev<-glm(mean_nurs~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_nurs>0),family= gaussian(link='log'))
+
+m6_sev<-glm(mean_anaest~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_anaest>0),family= gaussian(link='log'))
+
+m7_sev<-glm(mean_int_care~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_int_care>0),family= gaussian(link='log'))
+
+
+m8_sev<-glm(mean_ergo~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_ergo>0),family= gaussian(link='log'))
+
+m9_sev<-glm(mean_non_med~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_non_med>0),family= gaussian(link='log'))
+
+
+m10_sev<-glm(mean_physt~sex+age_group+group1+etiology+main_cost+stay_aft_leav+ins_class+SCIM,
+         data=data_regression|>filter(mean_physt>0),family= gaussian(link='log'))
+
+
+colnames(data_regression)
+summary(m1_sev)
+summary(m2_sev)
+summary(m3_sev)
+summary(m4_sev)
+summary(m5_sev)
+summary(m6_sev)
+summary(m7_sev)
+summary(m8_sev)
+summary(m9_sev)
+summary(m10_sev)
+## R squared Mc Fadden
+with(summary(m1_sev), 1 - deviance/null.deviance)
+with(summary(m2_sev), 1 - deviance/null.deviance)
+with(summary(m3_sev), 1 - deviance/null.deviance)
+with(summary(m4_sev), 1 - deviance/null.deviance)
+with(summary(m5_sev), 1 - deviance/null.deviance)
+with(summary(m6_sev), 1 - deviance/null.deviance)
+with(summary(m7_sev), 1 - deviance/null.deviance)
+with(summary(m8_sev), 1 - deviance/null.deviance)
+with(summary(m9_sev), 1 - deviance/null.deviance)
+with(summary(m10_sev), 1 - deviance/null.deviance)
+
+```
+
+
+## Bibliography
